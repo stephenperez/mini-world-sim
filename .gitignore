@@ -1,0 +1,14 @@
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+CaptureSpecs/0*/
+__pycache__/
+*.py[cod]
+.vs/
+.venv/
+*.sln
+*.VC.db
+*.opensdf
+*.sdf

@@ -1,0 +1,19 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.6",
+  "Category": "Synthetic Data",
+  "Description": "Minimal Unreal line-world renderer for minimap-conditioned frame generation experiments.",
+  "Modules": [
+    {
+      "Name": "MiniWorldSim",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "Paper2D",
+      "Enabled": true
+    }
+  ]
+}
