@@ -32,6 +32,7 @@ The experiment is meant to answer a few practical questions:
 - How much synthetic data is needed before the output starts looking coherent?
 - How expensive is the training loop on a local consumer GPU?
 - Can the trained model be served locally and called from the simulator in real time?
+- How much GPU headroom remains when the simulator is using generated frames interactively?
 - What failure cases appear as the interaction set expands, such as backing into walls, sliding along walls, and collision indicators?
 
 ## Early Conclusions
@@ -39,6 +40,8 @@ The experiment is meant to answer a few practical questions:
 For this deliberately simple setup, the answer so far is yes: it is possible to train a local model to render a plausible first-person view from the minimap input on a consumer GPU.
 
 The early models are small by modern standards, but they already learn useful structure. With enough generated samples, training can produce fairly decent results in under an hour on a high-end consumer GPU. The outputs are not perfect, but walls are usually in approximately the right place, motion is often coherent, and wall colors are often close to correct.
+
+The model can also generate frames fast enough to be used interactively by the simulator. That said, real-time generation is not computationally free: even with `128x128` frames and a relatively small model, GPU usage can sit above 50% while the model-render mode is running.
 
 The main lesson is that the minimap does a lot of work. Because the model receives the updated local layout every frame, it does not need to memorize entire levels. The hard part becomes learning the visual projection from simple overhead geometry to a low-resolution first-person view.
 
@@ -418,6 +421,8 @@ Use a different checkpoint path if your latest run is under another directory.
 ## Model Render Mode
 
 Start the model server first, then run the simulator in model-render mode. The left panel remains the real minimap; the right panel is filled with frames returned by the Python model server.
+
+This mode is interactive on the test machine, but expect meaningful GPU usage from the model server. In current experiments, GPU utilization can exceed 50% even at `128x128` output resolution.
 
 ```powershell
 .\scripts\Run-EditorGame.cmd `
